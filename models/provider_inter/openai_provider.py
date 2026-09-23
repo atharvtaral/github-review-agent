@@ -1,0 +1,42 @@
+"""
+OpenAI Provider Implementation.
+"""
+
+import os
+from dotenv import load_dotenv
+from typing import Optional
+from openai import OpenAI
+from models.provider_inter.provider_interface import LLMProviderInterface
+
+load_dotenv()
+
+class OpenAIProvider(LLMProviderInterface):
+    def __init__(self, model_name: str = "gpt-4o-mini", api_key: Optional[str] = None):
+        self.model_name = model_name
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        
+        if not self.api_key:
+            raise ValueError("OPENAI_API_KEY is missing. Set it in .env or as a parameter.")
+            
+        self.client = OpenAI(api_key=self.api_key)
+
+    def generate_review(
+        self, 
+        prompt: str, 
+        system_instruction: Optional[str] = None,
+        temperature: float = 0.2
+    ) -> str:
+        messages = []
+        
+        if system_instruction:
+            messages.append({"role": "system", "content": system_instruction})
+            
+        messages.append({"role": "user", "content": prompt})
+        
+        response = self.client.chat.completions.create(
+            model=self.model_name,
+            messages=messages,
+            temperature=temperature
+        )
+        
+        return response.choices[0].message.content
