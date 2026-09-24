@@ -262,8 +262,54 @@
 
 
 
+# """
+# Model Router using Google Gemini Models.
+# """
+
+# from typing import Dict, Any, Optional
+# from models.provider_inter.provider_interface import LLMProviderInterface
+# from models.provider_inter.openai_provider import OpenAIProvider
+
+
+# class ModelRouter:
+#     def __init__(
+#         self, 
+#         fast_model: Optional[LLMProviderInterface] = None,
+#         code_model: Optional[LLMProviderInterface] = None,
+#         reasoning_model: Optional[LLMProviderInterface] = None,
+#         security_model: Optional[LLMProviderInterface] = None
+#     ):
+#         # Google Gemini Production Models
+#         self.fast_model = fast_model or OpenAIProvider(model_name="gemini-1.5-flash")
+#         self.code_model = code_model or OpenAIProvider(model_name="gemini-1.5-flash")
+#         self.reasoning_model = reasoning_model or OpenAIProvider(model_name="gemini-1.5-flash")
+#         self.security_model = security_model or OpenAIProvider(model_name="gemini-1.5-flash")
+
+#     def run_fast_check(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.fast_model.generate_review(prompt, system_instruction, temperature=0.1)
+
+#     def run_code_review(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.code_model.generate_review(prompt, system_instruction, temperature=0.2)
+
+#     def run_reasoning_review(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.reasoning_model.generate_review(prompt, system_instruction, temperature=0.1)
+
+#     def run_security_review(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.security_model.generate_review(prompt, system_instruction, temperature=0.1)
+
+
+
+
+
+
+
+
+
+
+
+
 """
-Model Router using Google Gemini Models.
+Model Router using Active Google Gemini Models.
 """
 
 from typing import Dict, Any, Optional
@@ -279,11 +325,11 @@ class ModelRouter:
         reasoning_model: Optional[LLMProviderInterface] = None,
         security_model: Optional[LLMProviderInterface] = None
     ):
-        # Google Gemini Production Models
-        self.fast_model = fast_model or OpenAIProvider(model_name="gemini-1.5-flash")
-        self.code_model = code_model or OpenAIProvider(model_name="gemini-1.5-flash")
-        self.reasoning_model = reasoning_model or OpenAIProvider(model_name="gemini-1.5-flash")
-        self.security_model = security_model or OpenAIProvider(model_name="gemini-1.5-flash")
+        # Active Latest Production Gemini Model
+        self.fast_model = fast_model or OpenAIProvider(model_name="gemma-4-26b-a4b-it")
+        self.code_model = code_model or OpenAIProvider(model_name="gemma-4-26b-a4b-it")
+        self.reasoning_model = reasoning_model or OpenAIProvider(model_name="gemma-4-26b-a4b-it")
+        self.security_model = security_model or OpenAIProvider(model_name="gemma-4-26b-a4b-it")
 
     def run_fast_check(self, prompt: str, system_instruction: Optional[str] = None) -> str:
         return self.fast_model.generate_review(prompt, system_instruction, temperature=0.1)
