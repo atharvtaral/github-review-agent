@@ -129,6 +129,48 @@
 
 
 
+# import os
+# from google import genai
+# from typing import Optional
+
+# class OpenAIProvider:
+#     """Provider wrapper for Google Gemini LLM inference."""
+    
+#     def __init__(self, model_name: str = "gemini-2.5-flash"):
+#         self.api_key = os.getenv("GEMINI_API_KEY")
+#         if not self.api_key:
+#             raise ValueError("GEMINI_API_KEY is missing. Set it in .env or GitHub Secrets.")
+        
+#         # New Google GenAI Client
+#         self.client = genai.Client(api_key=self.api_key)
+#         self.model_name = model_name
+
+#     def generate_review(
+#         self, 
+#         prompt: str, 
+#         system_instruction: Optional[str] = None, 
+#         temperature: float = 0.2
+#     ) -> str:
+#         """Call Gemini API to generate PR review summary."""
+        
+#         sys_prompt = system_instruction or "You are an expert AI Code Reviewer and Security Auditor."
+#         full_prompt = f"System Instruction: {sys_prompt}\n\nTask:\n{prompt}"
+
+#         response = self.client.models.generate_content(
+#             model=self.model_name,
+#             contents=full_prompt,
+#         )
+#         return response.text
+
+
+
+
+
+
+
+
+
+
 import os
 from google import genai
 from typing import Optional
@@ -136,12 +178,11 @@ from typing import Optional
 class OpenAIProvider:
     """Provider wrapper for Google Gemini LLM inference."""
     
-    def __init__(self, model_name: str = "gemini-2.5-flash"):
+    def __init__(self, model_name: str = "gemma-4-26b-a4b-it"):
         self.api_key = os.getenv("GEMINI_API_KEY")
         if not self.api_key:
             raise ValueError("GEMINI_API_KEY is missing. Set it in .env or GitHub Secrets.")
         
-        # New Google GenAI Client
         self.client = genai.Client(api_key=self.api_key)
         self.model_name = model_name
 
@@ -151,8 +192,6 @@ class OpenAIProvider:
         system_instruction: Optional[str] = None, 
         temperature: float = 0.2
     ) -> str:
-        """Call Gemini API to generate PR review summary."""
-        
         sys_prompt = system_instruction or "You are an expert AI Code Reviewer and Security Auditor."
         full_prompt = f"System Instruction: {sys_prompt}\n\nTask:\n{prompt}"
 
