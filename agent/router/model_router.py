@@ -101,8 +101,52 @@
 
 
 
+# """
+# Model Router using Groq Supported Models.
+# """
+
+# from typing import Dict, Any, Optional
+# from models.provider_inter.provider_interface import LLMProviderInterface
+# from models.provider_inter.openai_provider import OpenAIProvider
+
+
+# class ModelRouter:
+#     def __init__(
+#         self, 
+#         fast_model: Optional[LLMProviderInterface] = None,
+#         code_model: Optional[LLMProviderInterface] = None,
+#         reasoning_model: Optional[LLMProviderInterface] = None,
+#         security_model: Optional[LLMProviderInterface] = None
+#     ):
+#         # Groq Supported Models
+#         self.fast_model = fast_model or OpenAIProvider(model_name="llama-3.1-8b-instant")
+#         self.code_model = code_model or OpenAIProvider(model_name="llama-3.3-70b-versatile")
+#         self.reasoning_model = reasoning_model or OpenAIProvider(model_name="llama-3.3-70b-versatile")
+#         self.security_model = security_model or OpenAIProvider(model_name="llama-3.3-70b-versatile")
+
+#     def run_fast_check(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.fast_model.generate_review(prompt, system_instruction, temperature=0.1)
+
+#     def run_code_review(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.code_model.generate_review(prompt, system_instruction, temperature=0.2)
+
+#     def run_reasoning_review(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.reasoning_model.generate_review(prompt, system_instruction, temperature=0.1)
+
+#     def run_security_review(self, prompt: str, system_instruction: Optional[str] = None) -> str:
+#         return self.security_model.generate_review(prompt, system_instruction, temperature=0.1)
+
+
+
+
+
+
+
+
+
+
 """
-Model Router using Groq Supported Models.
+Model Router for directing review tasks using Active Groq Models.
 """
 
 from typing import Dict, Any, Optional
@@ -118,11 +162,11 @@ class ModelRouter:
         reasoning_model: Optional[LLMProviderInterface] = None,
         security_model: Optional[LLMProviderInterface] = None
     ):
-        # Groq Supported Models
+        # Stable & Active Groq Production Models
         self.fast_model = fast_model or OpenAIProvider(model_name="llama-3.1-8b-instant")
-        self.code_model = code_model or OpenAIProvider(model_name="llama-3.3-70b-versatile")
-        self.reasoning_model = reasoning_model or OpenAIProvider(model_name="llama-3.3-70b-versatile")
-        self.security_model = security_model or OpenAIProvider(model_name="llama-3.3-70b-versatile")
+        self.code_model = code_model or OpenAIProvider(model_name="llama-3.1-70b-versatile")
+        self.reasoning_model = reasoning_model or OpenAIProvider(model_name="llama-3.1-70b-versatile")
+        self.security_model = security_model or OpenAIProvider(model_name="llama-3.1-70b-versatile")
 
     def run_fast_check(self, prompt: str, system_instruction: Optional[str] = None) -> str:
         return self.fast_model.generate_review(prompt, system_instruction, temperature=0.1)
