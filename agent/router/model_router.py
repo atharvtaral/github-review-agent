@@ -280,10 +280,10 @@ class ModelRouter:
         security_model: Optional[LLMProviderInterface] = None
     ):
         # Google Gemini Production Models
-        self.fast_model = fast_model or OpenAIProvider(model_name="gemini-2.5-flash")
-        self.code_model = code_model or OpenAIProvider(model_name="gemini-2.5-flash")
-        self.reasoning_model = reasoning_model or OpenAIProvider(model_name="gemini-2.5-flash")
-        self.security_model = security_model or OpenAIProvider(model_name="gemini-2.5-flash")
+        self.fast_model = fast_model or OpenAIProvider(model_name="gemini-1.5-flash")
+        self.code_model = code_model or OpenAIProvider(model_name="gemini-1.5-flash")
+        self.reasoning_model = reasoning_model or OpenAIProvider(model_name="gemini-1.5-flash")
+        self.security_model = security_model or OpenAIProvider(model_name="gemini-1.5-flash")
 
     def run_fast_check(self, prompt: str, system_instruction: Optional[str] = None) -> str:
         return self.fast_model.generate_review(prompt, system_instruction, temperature=0.1)
