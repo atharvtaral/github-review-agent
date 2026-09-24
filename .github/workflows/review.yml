@@ -55,6 +55,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           PYTHONPATH=. python -c "from github.webhook.webhook_handler import handler; print('GitHub Action Review Execution Complete')"

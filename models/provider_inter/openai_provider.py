@@ -81,19 +81,68 @@
 
 
 
+# import os
+# from groq import Groq
+# from typing import Optional
+
+# class OpenAIProvider:
+#     """Provider wrapper for Groq LLM inference."""
+    
+#     def __init__(self, model_name: str = "llama-3.3-70b-versatile"):
+#         self.api_key = os.getenv("GROQ_API_KEY")
+#         if not self.api_key:
+#             raise ValueError("GROQ_API_KEY is missing. Set it in .env or GitHub Secrets.")
+        
+#         self.client = Groq(api_key=self.api_key)
+#         self.model_name = model_name
+
+#     def generate_review(
+#         self, 
+#         prompt: str, 
+#         system_instruction: Optional[str] = None, 
+#         temperature: float = 0.2
+#     ) -> str:
+#         """Call Groq API to generate PR review summary."""
+#         messages = []
+        
+#         if system_instruction:
+#             messages.append({"role": "system", "content": system_instruction})
+#         else:
+#             messages.append({"role": "system", "content": "You are an expert AI Code Reviewer and Security Auditor."})
+            
+#         messages.append({"role": "user", "content": prompt})
+
+#         response = self.client.chat.completions.create(
+#             model=self.model_name,
+#             messages=messages,
+#             temperature=temperature
+#         )
+#         return response.choices[0].message.content
+
+
+
+
+
+
+
+
+
+
+
 import os
-from groq import Groq
+from google import genai
 from typing import Optional
 
 class OpenAIProvider:
-    """Provider wrapper for Groq LLM inference."""
+    """Provider wrapper for Google Gemini LLM inference."""
     
-    def __init__(self, model_name: str = "llama-3.3-70b-versatile"):
-        self.api_key = os.getenv("GROQ_API_KEY")
+    def __init__(self, model_name: str = "gemini-2.5-flash"):
+        self.api_key = os.getenv("GEMINI_API_KEY")
         if not self.api_key:
-            raise ValueError("GROQ_API_KEY is missing. Set it in .env or GitHub Secrets.")
+            raise ValueError("GEMINI_API_KEY is missing. Set it in .env or GitHub Secrets.")
         
-        self.client = Groq(api_key=self.api_key)
+        # New Google GenAI Client
+        self.client = genai.Client(api_key=self.api_key)
         self.model_name = model_name
 
     def generate_review(
@@ -102,19 +151,13 @@ class OpenAIProvider:
         system_instruction: Optional[str] = None, 
         temperature: float = 0.2
     ) -> str:
-        """Call Groq API to generate PR review summary."""
-        messages = []
+        """Call Gemini API to generate PR review summary."""
         
-        if system_instruction:
-            messages.append({"role": "system", "content": system_instruction})
-        else:
-            messages.append({"role": "system", "content": "You are an expert AI Code Reviewer and Security Auditor."})
-            
-        messages.append({"role": "user", "content": prompt})
+        sys_prompt = system_instruction or "You are an expert AI Code Reviewer and Security Auditor."
+        full_prompt = f"System Instruction: {sys_prompt}\n\nTask:\n{prompt}"
 
-        response = self.client.chat.completions.create(
+        response = self.client.models.generate_content(
             model=self.model_name,
-            messages=messages,
-            temperature=temperature
+            contents=full_prompt,
         )
-        return response.choices[0].message.content
+        return response.text
