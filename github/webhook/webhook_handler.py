@@ -656,7 +656,9 @@ class WebhookHandler:
     def get_pr_files(self, owner: str, repo: str, pull_number: int) -> List[Dict[str, Any]]:
         """Fetch all modified files and patches for the PR using GitHub API."""
         token = os.getenv("GITHUB_TOKEN", "")
-        url = f"[https://api.github.com/repos/](https://api.github.com/repos/){owner}/{repo}/pulls/{pull_number}/files"
+        # CORRECTED:
+        url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/files"
+        #url = f"[https://api.github.com/repos/](https://api.github.com/repos/){owner}/{repo}/pulls/{pull_number}/files"
         headers = {
             "Authorization": f"Bearer {token}",
             "Accept": "application/vnd.github.v3+json"
