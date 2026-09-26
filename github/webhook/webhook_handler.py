@@ -779,6 +779,9 @@ GitHub Webhook Handler Endpoint & Class with Multi-File SAST, Suggested Changes 
 import os
 import re
 import requests
+import json
+from urllib.error import HTTPError
+from urllib.request import Request as URLRequest, urlopen
 from typing import Dict, Any, List
 from fastapi import FastAPI, Request, HTTPException, BackgroundTasks
 
